@@ -1,0 +1,161 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Doc_Tour",
+  "steps": [
+    {
+      "file": "routes/web.php",
+      "description": "Here we see the first encounter with the \"Route-model-binding\" feature, it is a feature in laravel to reduce the repetitive line of finding the model by its id, each time you click on the item (model) and you want to perform some CRUD thing (editing or deleting), id is passed with the url to the controller, the controller will use the id to fetch the specific model from the DB using the 'findOrFail($id)' method\r\n(check the lines from 37 to the end in the previous route file), so to avoid repetition \"Route-model-binding\" feature is used by following these simple steps:\r\n\r\n1- In the Route uri instead of passing the 'id' you pass a custom name.\r\n2- Use the same name as the controller parameter.\r\n3- You must define the type of the controller parameter to match the name of the model you're fetching.\r\n\r\n+++Example+++: \r\nroute: Route::get('/jobs/{job}/edit','edit') \r\n\r\nController:     \r\npublic function update(present_job $job){\r\n    $job->update(...);\r\n    ...\r\n}\r\n",
+      "line": 21
+    },
+    {
+      "file": "routes/web.php",
+      "description": "This is the routes file, it is the enterance of the website, imagin you entered a big house, you enter through the main door and inside the house there are many windows, each window can give you access to a specific room, \r\nand this is the purpose of the routes, each route name is a window for the corresponding controller to perform some unique logic for each view (page), this is the final and refactored version of the file, check the previous one 'web_before_model_binding'",
+      "line": 1
+    },
+    {
+      "file": "routes/web.php",
+      "description": "The routes here are groupped by the controller, it is very clean and best practice to do that, it will prevent the repetition of the controller name every time you define a new route \r\n(like the case in lines [11-15] in this file)",
+      "line": 17
+    },
+    {
+      "file": "routes/web.php",
+      "description": "This (->middleware('auth')) method will check if the user is authenticated (logged in) then it will allow him to reach the route, if not it will redirect him to a route NAMED - not url name - \"login\",\r\nthis is very nice way of authorization instead of doing the logic in the controller like this:\r\n\r\npublic function destroy(present_job $job){\r\n  Gate::authorize('edit-job', [$job,Auth::user()]);\r\n    if(Auth::guest()){\r\n        return redirect('/login');\r\n    }\r\n  .....\r\n}\r\nNote that: Auth::user() == Authenticated user == current user",
+      "line": 21
+    },
+    {
+      "file": "resources/views/auth/login.blade.php",
+      "description": "If the @csrf directive is missing from the form,\r\nit will show an error \"419 page expired\"\r\nfor more details Check Jefry way course (03:25:30)",
+      "line": 3
+    },
+    {
+      "file": "resources/views/Components/layout.blade.php",
+      "description": "When you write the command (npm run dev) 'Vite' creates an additional 'dev' server to bundle (serve/inject) frontend(compiled CSS & JS) in the project with hot module replacement (HMR) \"auto reloading on steroids\", the apache server handles the backend aspect of the project.\r\n\r\nVite is the fast development server responsible for handling the front end assets (CSS & JS & imgs etc.)\r\n& instead of linking raw .js or .css files you use Vite to bundle and optimize them.\r\n\r\nNote:\r\nVite is a server in dev mode & in production mode is a bundler\r\n",
+      "line": 4
+    },
+    {
+      "file": "app/Http/Controllers/jobController.php",
+      "description": "When you have a relationship between two tables (Ex: users and posts)\r\n    the model fetches one user in one query in each iteration (select * from users where id = 1).\r\n    When you access the userPosts another query will be applied (select * from posts where user_Id = 1)\r\n    This is lazy loading the posts relationship is loaded only when needed.\r\n    Better alternative is the eager loading, it loads relationships in advance,\r\n    it only runs two queries (select * from users) & (select * from posts where user_id in (1,2,...))\r\n    Lazy eager loading Load relationships after the parent model is retrieved\r\n    AVOID LAZY LOADING IN LOOPS it will slow down the app",
+      "line": 14
+    },
+    {
+      "file": "database/migrations/2025_08_09_000003_create_employers_table.php",
+      "description": "Migration file is like a blueprint for DB tables\r\nDB must be created manually from the DBMS, then run php 'artisan migrate'\r\nthis way you(or your team members) don't have to worry about mistyping tabels' names \r\nand creating them manually, just send the migration file to your team and run it\r\nNote that Migrations are done by the order of timestamps in the files' names\r\nso whenever you have tables with foriegn keys, order the migration files to keep your sanity\r\n",
+      "line": 1
+    },
+    {
+      "file": "resources/views/Components/layout.blade.php",
+      "description": "{{$test}} <===> <?php echo $test ?>",
+      "line": 33
+    },
+    {
+      "file": "resources/views/Components/nvLink.blade.php",
+      "description": "In components when working with @props(['key'=>'v'])\r\nwe use the key like this: $key,\r\nthe property in the @props() does not considered an attribute \r\nin the HTML element.\r\nWhen prefixing the property name with [:] its result will become an expression\r\n",
+      "line": 1
+    },
+    {
+      "file": "resources/views/Components/form-error.blade.php",
+      "description": "With this legendary directive you can display the validation error under each input field just by attaching the name of the input filed to this directive, you can use it directly in the view but here it is used in a component for extra styling and still it is a work of art, note that you need to provide the attribute \"name\" unless it won't work",
+      "line": 2
+    },
+    {
+      "file": "resources/views/Components/layout.blade.php",
+      "description": "The is method is bonded to the request() object, it returns true if the request url matches the pattern provided for it or false if not\r\n\r\nThe pattern inside request()->is('/'), must be \r\nSINGLE QUOTED WITHOUT /\r\nEX:\r\n<x-nvLinks href=\"/\" :clicked=\"request()->is('/')\">Home</x-nvLinks>\r\n<x-nvLinks href=\"/about\" :clicked=\"request()->is('about')\">about</x-nvLinks>\r\n<x-nvLinks href=\"/contact\" :clicked=\"request()->is('contact')\">Contact</x-nvLinks>\r\n",
+      "line": 16
+    },
+    {
+      "file": "resources/views/Components/layout.blade.php",
+      "description": "This nice directive will make sure that the block of code \"HTML elements\" won't appear unless the user is a guest(Not logged in)",
+      "line": 14
+    },
+    {
+      "file": "resources/views/Components/layout.blade.php",
+      "description": "Same as guest but for logged in users",
+      "line": 20
+    },
+    {
+      "file": "resources/views/Components/layout.blade.php",
+      "description": "This $slot variable is specific to components, it represents what will be dynamic in the component,\r\nthis is the default one, you can use multiple slots in the component, to improve dynamic code, but you have to name them",
+      "line": 40
+    },
+    {
+      "file": "resources/views/Components/layout.blade.php",
+      "description": "This is one of the named slots i told you about on line 40\r\nnotice how to make them go to the default value if nothing provided\r\nand also notice how to reference them in the login view the first line:\r\n<x-layout :title=\"'Login'\" :header=\"'Login in the site'\">",
+      "line": 7
+    },
+    {
+      "file": "app/Models/present_job.php",
+      "description": "Eloquent model is a complex technology to simplify the work with DBs queries, through the model\r\nyou can perform CRUD ops with ease, and you can retrieve the related table in case of complex relations\r\n\r\nThe eloquent model should be named as the singular name of the table we have, so laravel can find the table (plural model name) automatically and perform the required query",
+      "line": 1
+    },
+    {
+      "file": "app/Models/present_job.php",
+      "description": "This line indicates which columns can be mass assigned(Security thing): \r\nprotected $fillable = ['title', 'salary', 'employer_id'];\r\nThis line turn the feature off : protected $guarded = [];",
+      "line": 8
+    },
+    {
+      "file": "app/Models/present_job.php",
+      "description": "You can access properties from both table in your \r\ncode just like joining queries but you have to \r\ndefine the relationships, for both tables:\r\n\r\n//employer Model\r\nclass employer extends Model\r\n{\r\n    use HasFactory;\r\n    public function jobs(){\r\n        return $this->hasMany(present_job::class);\r\n    }\r\n}\r\n\r\n//present_job Model\r\nclass present_job extends Model {\r\n  use HasFactory;\r\n protected $fillable = ['title', 'salary'];\r\n\r\n public function employer(){\r\n  return $this->belongsTo(employer::class);//this job belongs to employer\r\n }\r\n}\r\n\r\n\r\nTo access the related table do the following:\r\n$job = App\\Models\\present_job::first();\r\n$job->employer;\r\n\r\nnotice how the employer method is called as a property to get employer instance, \r\nif called as method it will return the relation path\r\n$job->employer();\r\n[output]: Illuminate\\Database\\Eloquent\\Relations\\BelongsTo {#5326}\r\n",
+      "line": 11
+    },
+    {
+      "file": "app/Models/job_tag.php",
+      "description": "To override the naming conventions, \r\nIn your model, explicitly set the table name like this to force Laravel to use your custom name",
+      "line": 12
+    },
+    {
+      "file": "database/factories/job_tagFactory.php",
+      "description": "When the job_tag factory run, it will run the factory for the tables (present_jobs, tags) so no need to run their own factories, but please pay attention to the relations and the order of creation to avoid madness\r\n\r\nNote how to bind the ids with the factory call",
+      "line": 22
+    },
+    {
+      "file": "routes/web_before_model_binding.php",
+      "description": "When using wild cards in routes, keep it at the \r\nbottom of the file to avoid conflicting with \r\nthe regular uri like this: \r\n",
+      "line": 42
+    },
+    {
+      "file": "app/Http/Controllers/jobController.php",
+      "description": "In pure php we get the attributes from forms \r\nby using superglobals ($_GET & $_POST)\r\nin laravel we use (request()->all())\r\n",
+      "line": 18
+    },
+    {
+      "file": "resources/views/jobs/show.blade.php",
+      "description": "You can refer to forms from the button element by using \r\nthe id in the form and the form=\"id\" in the button\r\nthen when you click the button, the form will work, the form is hidden\r\n",
+      "line": 14
+    },
+    {
+      "file": "app/Http/Controllers/registerUserController.php",
+      "description": "When using request()->validate() rules\r\nthe keys are the form names not \r\nthe column names in the DB \r\nhttps://chatgpt.com/c/68a72c54-08f4-8333-98ae-ebf1d2e15357\r\n",
+      "line": 18
+    },
+    {
+      "file": "app/Http/Controllers/registerUserController.php",
+      "description": "These rules perform sql queries under the hood like this rule checks the unique user\r\nselect count(*) as aggregate from `users` where `name` = 'username entered'",
+      "line": 19,
+      "selection": {
+        "start": {
+          "line": 2,
+          "character": 59
+        },
+        "end": {
+          "line": 2,
+          "character": 75
+        }
+      }
+    },
+    {
+      "file": "routes/web.php",
+      "description": "[Can] method, is specific to the [Auth::user() & Gates] for Authorization, it can be used in 3 places\r\n1- on the controller method level:\r\n        // if(Auth::user()->cannot('edit-job', $job)){\r\n        //     dd('Not permitted to edit the job');\r\n        // }\r\n\r\n2- blade directive:\r\n  @can('edit-job', $job)\r\n    <x-link href='/jobs/{{$job->id}}/edit'>Edit</x-link>\r\n    <x-button form=\"dlt\">Delete</x-button>\r\n  @endcan\r\n\r\n3- routes level after middleware('auth'):\r\n    Route::get('/jobs/{job}/edit','edit')->middleware('auth')->can('edit-job', 'job');\r\n",
+      "line": 21
+    },
+    {
+      "file": "app/Http/Controllers/registerUserController.php",
+      "description": "The \"confirmed\" rule is a sign to laravel to look for an input field named \"password_confirmation\"\r\nit will automatically match the two fields ",
+      "line": 21
+    },
+    {
+      "file": "routes/web.php",
+      "description": "Check the action attribute name for each route, they are following a convention for restful api like this:\r\n\r\nHTTP_verb |           URI           | Controller_method | Purpose\r\n<------------------------------------------------------------------------------------------------------------->\r\n  GET     | /posts                  |       index       | Show resources list\r\n  GET     | /posts/create           |       create      | Show form to create new resource(the 'Add_new_thing')\r\n  POST    | /posts                  |       store       | Insert new resource to DB\r\n  GET     | /posts/{id}             |       show        | Show single resource \r\n  GET     | /posts/{id}/edit        |       edit        | Show form to edit the resource\r\n  Patch   | /posts/{id}             |       update      | Update the resource in DB\r\n  DELETE  | /posts/{id}             |       destroy     | Delete the resource in DB\r\n\r\nNote that the browser understand only the verbs (GET & POST)\r\nso to edit or delete we need to add the blade directive @method after the form, like this:\r\n\r\n  <form action=\"/jobs/{{$job->id}}\" method=\"post\">\r\n    @method('PATCH')\r\n    @csrf\r\n    .....",
+      "line": 18
+    }
+  ]
+}
