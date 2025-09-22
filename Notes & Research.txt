@@ -1,0 +1,372 @@
+++++++++++++++++ Note #00 ++++++++++++++++
+1-To create new project:
+    composer create-project laravel/laravel project_name
+2-To include a starter kit: (Note that kits should be applied at the beginning of the project)
+    composer require laravel/breeze --dev
+    php artisan breeze:install
+++++++++++++++++ End Note #00 ++++++++++++++++
+
+==========Question #1==========
+--> The two ways to create a layout in laravel (extend & component), which one is the optimal
+
+==> The modern way from version 11^ is component (<x-layout></x-layout>)
+==========End Question #1==========
+
+==========Question #2==========
+--> In Laravel app.css why does the styling not applied, (laravel dev server doesn't serve css, the file is not linked in the view)
+
+==> The command (npm run dev) creates an additional server to bundle (serve/inject) frontend(compiled CSS & JS) in the project
+    the apache server handles the backend aspect of the project
+==========End Question #2==========
+
+==========Question #3==========
+--> Why does the command (npm run dev) doesn't run, does it have to do with tailwind not installed?
+    when i run the command, the following message appear: 
+	npm : File C:\Program Files\nodejs\npm.ps1 cannot be loaded because running scripts is disabled on this system. For more information, see 
+	about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+
+==> Windows PowerShell is blocking the execution of npm scripts because your system's execution policy doesn't allow running scripts. 
+    This is a security feature of PowerShell, you have to either bypass the policy with the command (Set-ExecutionPolicy RemoteSigned -Scope CurrentUser), or run the script outside powershell
+==========End Question #3==========
+
+==========Question #4==========
+--> Is SQLlite a relational database?
+
+==> yes
+==========End Question #4==========
+
+==========Question #5==========
+--> What is the purpos of the migration files and Why is there a 'user' migration file,
+    why are there many pre defined migrations and models?
+
+==> 
+==========End Question #5==========
+
+==========Question #5==========
+--> Seeder error (Call to undefined function setContainer())
+
+==> In the seeder file (Database seeder) in the call function i was calling the model insted of the seederfile for each table
+==========End Question #5==========
+
+==========Question #6==========
+--> Client side and server side code
+
+==> Chat link: https://chatgpt.com/c/685d0733-f168-8010-99da-7541cb286ec5
+==========End Question #6==========
+
+==========Question #7==========
+--> What is artisan
+
+==> Artisan is Laravel's command-line interface (CLI) that helps you interact with and manage your Laravel application efficiently.
+    Saves time (no need to manually create files).
+    Reduces errors.
+    Provides helpful debug and maintenance tools.
+    Encourages best practices in Laravel structure.
+
+    Chat link: https://chatgpt.com/c/685d0733-f168-8010-99da-7541cb286ec5
+==========End Question #7==========
+
+=========Question #9==========
+--> What is lazy loading, and what are better approaches for it(eager loading)
+
+==> When you have a relationship between two tables (Ex: users and posts)
+    the model fetches one user in one query in each iteration (select * from users where id = 1).
+    When you access the userPosts another query will be applied (select * from posts where user_Id = 1)
+    This is lazy loading the posts relationship is loaded only when needed.
+    Better alternative is the eager loading, it loads relationships in advance,
+    it only runs two queries (select * from users) & (select * from posts where user_id in (1,2,...))
+    Lazy eager loading Load relationships after the parent model is retrieved
+    AVOID LAZY LOADING IN LOOPS it will slow down the app
+==========End Question #9==========
+
+=========Question #10==========
+--> What is @csrf (blade directive) and what is the attack related to it
+
+==> Check Jefry way course (03:25:30)
+==========End Question #10==========
+
+=========Question #11==========
+--> What is the difference between (Laravel herd and xampp)
+
+==> Laravel Herd is modern, Laravel-centric, and easier to use for Laravel devs.
+    XAMPP is general-purpose, more manual, but good for basic PHP projects.
+==========End Question #11==========
+
+=========Question #12==========
+--> What happens under the hood when i type Auth::login($user)
+
+==> 
+==========End Question #12==========
+
+=========Question #13==========
+--> What is (fixation attack) when a new authenticated user tries to login
+
+==> 
+==========End Question #13==========
+
+=========Question #14==========
+--> What is slug, in the request validation process
+
+==> 
+==========End Question #14==========
+
+==========Question #15==========
+--> Production vs deployment
+
+==>
+==========End Question #15==========
+
+==========Question #16==========
+--> cursorPaginate vs simplePaginate
+
+==>
+==========End Question #16==========
+
+==========Question #17==========
+--> What are Facades in laravel
+
+==>
+==========End Question #17==========
+
+
+******************** Notes Section ********************
+
+
+++++++++++++++++ Note #1 ++++++++++++++++
+If the @csrf directive is missing from the form,
+it will show an error "419 page expired"
+++++++++++++++++ End Note #1 ++++++++++++++++
+
+++++++++++++++++ Note #2 ++++++++++++++++
+Migration file is like a blueprint for DB tables
+DB must be created manually from the DBMS, then run php 'artisan migrate'
+this way you(or your team members) don't have to worry about mistyping tabels' names 
+and creating them manually, just send the migration file to your team and run it
+Note that the order of the 
+
+++++++++++++++++ End Note #2 ++++++++++++++++
+
+++++++++++++++++ Note #3 ++++++++++++++++
+{{$test}} <===> <?php echo $test ?>
+++++++++++++++++ End Note #3 ++++++++++++++++
+
+++++++++++++++++ Note #4 ++++++++++++++++
+In the controller when working with @props(['key'=>'v'])
+we use the key like this $key,
+the property in the @props() does not considered an attribute 
+in the HTML element.
+When prefixing the property name with [:] its result will become an expression
+++++++++++++++++ End Note #4 ++++++++++++++++
+
+++++++++++++++++ Note #5 ++++++++++++++++
+The pattern inside request()->is('/'), must be 
+SINGLE QUOTED WITHOUT /
+EX:
+<x-nvLinks href="/" :clicked="request()->is('/')">Home</x-nvLinks>
+<x-nvLinks href="/about" :clicked="request()->is('about')">about</x-nvLinks>
+<x-nvLinks href="/contact" :clicked="request()->is('contact')">Contact</x-nvLinks>
+++++++++++++++++ End Note #5 ++++++++++++++++
+
+++++++++++++++++ Note #6 ++++++++++++++++
+Notice this example - Specific to the framework:
+$t = Arr::first($jobs,fn(array $job) => $job['id'] === $id);
+if the id matches the parameter return the job
+(which is the first element of the array matching the criteria in the callback)
+This is useful, we don't need to loop over everything with foreach
+++++++++++++++++ End Note #6 ++++++++++++++++
+
+++++++++++++++++ Note #7 ++++++++++++++++
+Notice this helper funtion in this snippet
+
+public static function find($id):array{
+  $job = Arr::first(Job::get(),fn(array $job) => $job['id'] === $id);
+  if(!$job){
+    abort(404);
+  }
+  return $job;
+} 
+++++++++++++++++ End Note #7 ++++++++++++++++
+
+++++++++++++++++ Note #8 ++++++++++++++++
+Migration files can be shared to 
+generate identical DBs between the teammates
+They are like an actions done to the DB
+++++++++++++++++ End Note #8 ++++++++++++++++
+
+++++++++++++++++ Note #9 ++++++++++++++++
+The eloquent model should be named as the 
+singular name of the table we have
+++++++++++++++++ End Note #9 ++++++++++++++++
+
+++++++++++++++++ Note #10 ++++++++++++++++
+With [php artisan help make:model] we can make the following consecutively:
+Generate a migration, seeder, factory, policy, resource controller, 
+and form request classes for the model
+++++++++++++++++ End Note #10 ++++++++++++++++
+
+++++++++++++++++ Note #11 ++++++++++++++++
+When there is a foriegn key between two tables 
+and we run the factory, two tables will be created
+without the need to run the factory of the other table, ex:
+    public function definition(): array
+    {
+        return [
+            'title' => fake()->jobTitle(),
+            'salary' => fake()->numberBetween(5000,100000).'$',
+            'employer_id' => employer::factory()
+        ];
+    }
+
+And in the model having the foreign key -"present_jobs" in this ex- you should define the relation like this
+
+ public function employer(){
+  return $this->belongsTo(employer::class);
+ }
+and when you want to access the related table,
+do the following:
+$job = App\Models\present_job::first();
+$job->employer;
+
+notice how the employer method is called as a property to get employer instance, 
+if called as method it will return the relation path
+$job->employer();
+[output]: Illuminate\Database\Eloquent\Relations\BelongsTo {#5326}
+++++++++++++++++ End Note #11 ++++++++++++++++
+
+++++++++++++++++ Note #12 ++++++++++++++++
+To override the naming conventions, 
+In your JobTag model, explicitly set the table name
+class JobTag extends Model
+{
+    use HasFactory;
+
+    protected $table = 'jobs_tags'; // force Laravel to use your actual table name
+}
+++++++++++++++++ End Note #12 ++++++++++++++++
+
+++++++++++++++++ Note #13 ++++++++++++++++
+Migrations are done by the order of timestamps in the filename
+so whenever you have tables with foriegn keys 
+order the migration files to keep your sanity
+++++++++++++++++ End Note #13 ++++++++++++++++
+
+++++++++++++++++ Note #14 ++++++++++++++++
+You can access properties from both table in your 
+code just like joining queries but you have to 
+define the relationships, for both tables:
+
+//employer Model
+class employer extends Model
+{
+    use HasFactory;
+    public function jobs(){
+        return $this->hasMany(present_job::class);
+    }
+}
+
+//present_job Model
+class present_job extends Model {
+  use HasFactory;
+ protected $fillable = ['title', 'salary'];
+
+ public function employer(){
+  return $this->belongsTo(employer::class);//this job belongs to employer
+ }
+}
+++++++++++++++++ End Note #14 ++++++++++++++++
+
+++++++++++++++++ Note #15 ++++++++++++++++
+Check this chat (pivot table)
+https://chatgpt.com/c/689c7558-7e34-8324-9494-2fe1fa69ed32
+++++++++++++++++ End Note #15 ++++++++++++++++
+
+++++++++++++++++ Note #16 ++++++++++++++++
+Implement pagination system without laravel
+++++++++++++++++ End Note #16 ++++++++++++++++
+
+++++++++++++++++ Note #17 ++++++++++++++++
+When using wild cards in routes, keep it at the 
+bottom of the file to avoid conflicting with 
+the regular uri like this: 
+
+Route::get('/jobs', function(){
+    //some logic
+});
+
+Route::get('/jobs/create', fn()=> //returned);
+
+Route::get('/jobs/{id}', function($id){ // wild card used here
+    //some logic
+});
+++++++++++++++++ End Note #17 ++++++++++++++++
+
+++++++++++++++++ Note #18 ++++++++++++++++
+In pure php we get the attributes from forms 
+by using superglobals ($_GET & $_POST)
+in laravel we use (request()->all())
+++++++++++++++++ End Note #18 ++++++++++++++++
+
+++++++++++++++++ Note #19 ++++++++++++++++
+It is possible to disable the fillable 
+feature by using the ($guarded) special
+variable, like this: $guarded = []
+++++++++++++++++ End Note #19 ++++++++++++++++
+
+++++++++++++++++ Note #20 ++++++++++++++++
+Check for "Route Model binding" --Checked!!
+++++++++++++++++ End Note #20 ++++++++++++++++
+
+++++++++++++++++ Note #21 ++++++++++++++++
+You can refer to forms from the button element by using 
+the id in the form and the form="id" in the button
+then when you click the button, the form will work
+++++++++++++++++ End Note #21 ++++++++++++++++
+
+++++++++++++++++ Note #22 ++++++++++++++++
+Important Chat: https://chatgpt.com/c/68a6dc91-7bc0-8324-ad3c-c93d0045ffc5
+++++++++++++++++ End Note #22 ++++++++++++++++
+
+++++++++++++++++ Note #23 ++++++++++++++++
+When using request()->validate() rules
+the keys are the form names not 
+the column names in the DB 
+https://chatgpt.com/c/68a72c54-08f4-8333-98ae-ebf1d2e15357
+++++++++++++++++ End Note #23 ++++++++++++++++
+
+++++++++++++++++ Note #24 ++++++++++++++++
+Useful VS code feature to limit tabs 
+https://chatgpt.com/c/68ac2603-32f8-8331-903f-c708d6a7f473
+++++++++++++++++ End Note #24 ++++++++++++++++
+
+++++++++++++++++ Note #25 ++++++++++++++++
+[Can] method, is specific to the [Auth::user() & Gates] for Authorization, it can be used in 3 places
+1- on the controller method level:
+        // if(Auth::user()->cannot('edit-job', $job)){
+        //     dd('Not permitted to edit the job');
+        // }
+
+2- blade directive:
+  @can('edit-job', $job)
+    <x-link href='/jobs/{{$job->id}}/edit'>Edit</x-link>
+    <x-button form="dlt">Delete</x-button>
+  @endcan
+
+3- routes level after middleware('auth'):
+    Route::get('/jobs/{job}/edit','edit')->middleware('auth')->can('edit-job', 'job');
+++++++++++++++++ End Note #25 ++++++++++++++++
+
+++++++++++++++++ Note #26 ++++++++++++++++
+information about vite and hot reloading
+https://chatgpt.com/c/68ad9328-f254-8333-9f68-77a017dcbf5c
+++++++++++++++++ End Note #26 ++++++++++++++++
+
+++++++++++++++++ Note #27 ++++++++++++++++
+Next time you want to set up tailwind or any other framework
+check the "Framework Guides" for your sanity sake
+++++++++++++++++ End Note #27 ++++++++++++++++
+
+++++++++++++++++ End Note #27 ++++++++++++++++
+Check this: https://chatgpt.com/c/6895bb5a-c668-8329-907c-9b0bcfc027c0
+++++++++++++++++ End Note #27 ++++++++++++++++
+
+LEGENDARY DOCUMENTATION: when you finish these notes file convert it into tour file in the tutorial code 
