@@ -94,12 +94,12 @@
     },
     {
       "file": "app/Models/present_job.php",
-      "description": "You can access properties from both table in your \r\ncode just like joining queries but you have to \r\ndefine the relationships, for both tables:\r\n\r\n//employer Model\r\nclass employer extends Model\r\n{\r\n    use HasFactory;\r\n    public function jobs(){\r\n        return $this->hasMany(present_job::class);\r\n    }\r\n}\r\n\r\n//present_job Model\r\nclass present_job extends Model {\r\n  use HasFactory;\r\n protected $fillable = ['title', 'salary'];\r\n\r\n public function employer(){\r\n  return $this->belongsTo(employer::class);//this job belongs to employer\r\n }\r\n}\r\n\r\n\r\nTo access the related table do the following:\r\n$job = App\\Models\\present_job::first();\r\n$job->employer;\r\n\r\nnotice how the employer method is called as a property to get employer instance, \r\nif called as method it will return the relation path\r\n$job->employer();\r\n[output]: Illuminate\\Database\\Eloquent\\Relations\\BelongsTo {#5326}\r\n",
+      "description": "You can access properties from both models in your \r\ncode just like joining tables but you have to \r\ndefine the relationships, for both models:\r\n\r\n//employer Model\r\nclass employer extends Model{\r\n  use HasFactory;\r\n  public function jobs(){\r\n    return $this->hasMany(present_job::class);\r\n  }\r\n}\r\n\r\n//present_job Model\r\nclass present_job extends Model {\r\n  use HasFactory;\r\n  protected $fillable = ['title', 'salary'];\r\n\r\n  public function employer(){\r\n    return $this->belongsTo(employer::class); //this job belongs to one employer\r\n  }\r\n}\r\n\r\n\r\nTo access the related table do the following:\r\n$job = App\\Models\\present_job::first(); // \"first()\" method executes the query and get the first record\r\n$job->employer;\r\n\r\nnotice how the employer method is called as a property to get employer instance, \r\nif called as method it will return the relation path\r\n$job->employer();\r\n[output]: Illuminate\\Database\\Eloquent\\Relations\\BelongsTo {#5326}\r\n",
       "line": 11
     },
     {
       "file": "app/Models/job_tag.php",
-      "description": "To override the naming conventions, \r\nIn your model, explicitly set the table name like this to force Laravel to use your custom name",
+      "description": "To override naming conventions, \r\nIn your model, explicitly set the table name like this to force Laravel to use your custom name",
       "line": 12
     },
     {

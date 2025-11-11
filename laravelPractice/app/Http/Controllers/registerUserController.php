@@ -22,7 +22,6 @@ class registerUserController extends Controller
             ]);
             //create user
             $user = User::create($info);
-            
             //register
             @Auth::login($user);
             //redirect
