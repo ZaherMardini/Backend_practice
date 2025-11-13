@@ -13,6 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @plugin "flowbite/plugin";
+        @source "../../node_modules/flowbite"; --}}
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -32,5 +34,6 @@
                 {{ $slot }}
             </main>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.js"></script>
     </body>
 </html>

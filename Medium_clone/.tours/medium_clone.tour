@@ -1,0 +1,11 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Medium_clone",
+  "steps": [
+    {
+      "file": "database/migrations/2025_11_13_074436_create_posts_table.php",
+      "description": "In this line and the next I'm not consistint on purpose, just to let you know the different ways to deal with things and not sticking with the default conventions (بنوّعلك)",
+      "line": 20
+    }
+  ]
+}
