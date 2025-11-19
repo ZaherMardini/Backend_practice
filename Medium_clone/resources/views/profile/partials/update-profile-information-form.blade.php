@@ -28,11 +28,9 @@
             <x-text-input id="bio" name="bio" type="text" class="mt-1 block w-full" :value="old('bio', $user->bio)" required autofocus autocomplete="bio" />
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />
         </div>
+        
         @if (Auth::user()->image)
-            <div>
-                <img src="{{Auth::user()->image}}" class="object-cover max-w-[200px] max-h-full rounded-base mb-4 md:mb-0
-                ">
-            </div>
+            <x-profile-img/>
         @endif
 
         <div>

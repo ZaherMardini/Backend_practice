@@ -13,6 +13,21 @@
       "line": 16
     },
     {
+      "file": "resources/views/posts/create.blade.php",
+      "description": "      {{-- @if (Auth::user()->image) // Preview post image feature here (not known yet)\r\n        <div>\r\n          <img src=\"{{}}\" class=\"object-cover max-w-[200px] max-h-full rounded-base mb-4 md:mb-0\">\r\n        </div>\r\n      @endif --}}\r\n",
+      "line": 37
+    },
+    {
+      "file": "routes/web.php",
+      "description": "Notice how you can use the colon to get model attributes, it's a cool thing",
+      "line": 11
+    },
+    {
+      "file": "app/Models/Post.php",
+      "description": "In case of the time is less than a minute it will return 1 minute",
+      "line": 22
+    },
+    {
       "file": "app/Http/Controllers/PostController.php",
       "description": "When retrieving the resource like this \"Category::get()\"\r\nits type is collection, when you apply pagination\r\nit will change to \"Illuminate\\Pagination\\LengthAwarePaginator\" \r\nyou can confirm this by the new method \"$posts->links()\" used \r\nin the view, (dashboard view line 24)",
       "line": 17

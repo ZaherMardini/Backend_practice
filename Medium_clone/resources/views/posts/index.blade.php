@@ -13,7 +13,12 @@
     {{-- {{dd($posts)}} --}}
     <div class="post_container flex justify-center flex-wrap">
       @forelse ($posts as $post)
-        <x-post :imgPath="$post->Image" :header="$post->title" :content="$post->content" link="#"></x-post>
+        <x-post 
+        :imgPath="$post->Image" 
+        :header="$post->title" 
+        :content="$post->content" 
+        :link="route('post.show', ['username'=> $post->user->name, 'post' => $post])">
+      </x-post>
       @empty
         <div class="text-gray-400 my-12">No posts to show</div>
       @endforelse
