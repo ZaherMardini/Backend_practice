@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'image' => '/user.jpg',
+            'bio' => 'Test user very cool & legend bio'
         ]);
 
         $categories = ['All', 'Technology', 'Sport', 'Science', 'Politics', 'Entertainment'];
@@ -29,6 +31,6 @@ class DatabaseSeeder extends Seeder
             Category::create(['name' => $category]);
         };
 
-        Post::factory(10)->create();
+        // Post::factory(10)->create();
     }
 }

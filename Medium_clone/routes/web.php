@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('auth')->middleware(['auth', 'verified'])->group(function(){
+    Route::get('/', [PostController::class, 'index'])->name('dashboard');
+    Route::get('/post/create', [PostController::class, 'create']);
+    Route::post('/post/create', [PostController::class, 'store']);
 });
-
-Route::get('/dashboard', [CategoryController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
