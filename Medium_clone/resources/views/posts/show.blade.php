@@ -3,9 +3,10 @@
     {{-- User info section --}}
     <h1 class="mx-auto text-2xl font-bold">{{$post->title}}</h1>
     <div class="flex flex-wrap gap-3 p-2">
-      <x-profile-img :src="$post->user->image" class="w-[90px] h-[90px] rounded-full"/>
+      {{-- {{dd($post->user->name)}} --}}
+      <img src="{{Storage::url($post->user->image)}}" class="w-[90px] h-[90px] rounded-full"/>
         <span class="flex flex-col justify-center text-gray-700">
-          <span>{{$username}}</span>
+          <a href="{{route('profile.show', ['user' => $post->user])}}">{{$username}} (this should be link to public profile)</a>
           <span>{{$post->readingTime()}} min read . {{$post->created_at->format('M d, Y')}}</span>
         </span>
     </div>
@@ -13,8 +14,9 @@
 
     {{-- Likes section --}}
     <div>
-      <div class="w-full h-[2px] my-2 bg-gray-500"></div>
-        like icon here 3.4k
+      <div class="w-full h-[2px] my-2 bg-gray-500 text-gray-500"></div>
+        {{-- <i class="fa-solid fa-thumbs-up mx-2 text-gray-500"></i><span class="text-gray-700">3.4k</span> --}}
+        <i class="fa-regular fa-thumbs-up mx-2 text-gray-500"></i> <span class="text-gray-700">3.4k (dummy)</span>
       <div class="w-full h-[2px] my-2 bg-gray-500"></div>
     </div>
     {{-- End Likes section --}}

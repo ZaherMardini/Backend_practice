@@ -7,7 +7,11 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
+        <!-- Font awesome -->
+        <link href="{{ asset('css/css/all.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/css/brands.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/css/solid.css') }}" rel="stylesheet" />
+        {{-- Fonts --}}
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 

@@ -20,10 +20,28 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
+            'name' => 'Cool User',
+            'email' => 'cool@example.com',
+            'image' => '',
+            'bio' => 'Cool user is very cool & legend bio'
+        ]);
+        User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'image' => '/user.jpg',
+            'image' => '',
             'bio' => 'Test user very cool & legend bio'
+        ]);
+        User::factory()->create([
+            'name' => 'Test User_1',
+            'email' => 'test1@example.com',
+            'image' => '',
+            'bio' => 'Test user 1 very cool & legend bio'
+        ]);
+        User::factory()->create([
+            'name' => 'Test User_2',
+            'email' => 'test2@example.com',
+            'image' => '',
+            'bio' => 'Test user 2 very cool & legend bio'
         ]);
 
         $categories = ['All', 'Technology', 'Sport', 'Science', 'Politics', 'Entertainment'];

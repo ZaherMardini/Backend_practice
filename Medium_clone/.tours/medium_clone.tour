@@ -8,6 +8,16 @@
       "line": 20
     },
     {
+      "file": "resources/views/posts/show.blade.php",
+      "description": "Notice the beauty of named routes and how to send entire model through them, also look at the corresponding route",
+      "line": 9
+    },
+    {
+      "file": "routes/web.php",
+      "description": "Notice how we can get anything from the sent model in the request query, and still deliver the whole model to the controller",
+      "line": 10
+    },
+    {
       "file": "resources/views/profile/partials/update-profile-information-form.blade.php",
       "description": "Please don't forget the \"enctype=\"multipart/form-data\"\" when uploading files",
       "line": 16
@@ -18,11 +28,6 @@
       "line": 37
     },
     {
-      "file": "routes/web.php",
-      "description": "Notice how you can use the colon to get model attributes, it's a cool thing",
-      "line": 11
-    },
-    {
       "file": "app/Models/Post.php",
       "description": "In case of the time is less than a minute it will return 1 minute",
       "line": 22
@@ -31,11 +36,6 @@
       "file": "app/Http/Controllers/PostController.php",
       "description": "When retrieving the resource like this \"Category::get()\"\r\nits type is collection, when you apply pagination\r\nit will change to \"Illuminate\\Pagination\\LengthAwarePaginator\" \r\nyou can confirm this by the new method \"$posts->links()\" used \r\nin the view, (dashboard view line 24)",
       "line": 17
-    },
-    {
-      "file": "resources/views/dashboard.blade.php",
-      "description": "Notice the cool directive @forelse, it provides some feedback in case of no resource found,\r\nthe previous method:\r\n\r\n    foreach ($posts as $post)\r\n      <x-post :header=\"$post->title\" :content=\"$post->content\" link=\"###\" imgPath=\"testp\"></x-post>\r\n    @endforeach\r\n",
-      "line": 20
     }
   ]
 }

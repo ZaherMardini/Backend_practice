@@ -26,6 +26,36 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
     ];
 
+    public function followers(){
+        return $this->belongsToMany(User::class, 'user_follower',
+         'user_id', 'follower_id');
+    }
+
+    public function following(){
+        return $this->belongsToMany(User::class, 'user_follower',
+         'follower_id', 'user_id');
+    }
+
+    public function isFollowedBy(int $user_id){
+        if($user_id !== $this->id){
+            $followers = $this->followers;
+            foreach ($followers as $follower) {
+                if($follower->id === $user_id){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function follow(User $user){
+        if($this->id !== $user->id){
+            $user->followers()->toggle($this);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
