@@ -1,9 +1,16 @@
-{{-- {{dd($user->follow($user))}} --}}
-User: {{$first->id}}_______first: {{$second->id}}<br>
+User: {{$user->id}}
+
 <br>
 <br>
 <br>
 <br>
-User posts:
+Followers:
 <br>
-{{dd($first->posts)}}
+{{-- {{dd($post->likes()[0])}} --}}
+Post: {{$post->id}}
+<br>
+<br>
+Logic here:{{$user->editComment($post, 'edited')}}
+<br>
+<br>
+{{dd($user->comments)}}

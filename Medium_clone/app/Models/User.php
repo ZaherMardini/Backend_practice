@@ -5,9 +5,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -19,17 +20,60 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'image',
-        'bio',
-        'email',
-        'password',
-    ];
 
     public function posts(){
-        return $this->hasMany(Post::class);
+      return $this->hasMany(Post::class);
     }
+
+
+// ++++++++++ Like feature ++++++++++ \\
+
+    private function likes() {
+      return $this->hasMany(Like::class);
+    }
+    public function liked(Post $post){
+      $result = DB::select("SELECT COUNT(1) AS 'count' FROM likes WHERE user_id = :user_id AND post_id = :post_id", ['user_id' => $this->id, 'post_id' => $post->id]);
+      return $result[0]->count > 0;
+    }
+
+    // public function liked(Post $post){
+    // return DB::table('likes')
+    //     ->where('user_id', $this->id)
+    //     ->where('post_id', $post->id)
+    //     ->exists();
+    // }
+    public function like(Post $post){
+      if($this->liked($post)){
+        // delete the record from the likes table, should be toggle, but i don't know how
+        $this->likes()->where('post_id', $post->id)->delete();
+      }else{
+        Like::create(['user_id' => $this->id, 'post_id' => $post->id]);
+      }
+    }
+// ++++++++++ End Like feature ++++++++++ \\
+
+// ++++++++++ Comment feature ++++++++++ \\
+  public function comments(){
+    return $this->hasMany(Comment::class);
+  }
+
+  public function comment(Post $post, string $body){
+    Comment::create(['user_id' => $this->id, 'post_id' => $post->id, 'body' => $body]);
+  }
+
+  public function editComment(Post $post, string $body){
+    Comment::where(['user_id' => $this->id, 'post_id' => $post->id])->update(['body' => $body]);
+  }
+// ++++++++++ End Comment feature ++++++++++ \\
+
+// ++++++++++ Follow feature ++++++++++ \\
+  public function follow(User $user){
+    if($this->id !== $user->id){
+        $user->followers()->toggle($this);
+        return true;
+    }
+    return false;
+  }
 
     public function followers(){
         return $this->belongsToMany(User::class, 'user_follower',
@@ -53,13 +97,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
-    public function follow(User $user){
-        if($this->id !== $user->id){
-            $user->followers()->toggle($this);
-            return true;
-        }
-        return false;
-    }
+    // ++++++++++ End Follow feature ++++++++++ \\
 
     /**
      * The attributes that should be hidden for serialization.

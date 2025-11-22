@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Raiden',
             'email' => 'cool@example.com',
             'image' => 'avatars/dummy.svg',
-            'cimage' => '',
+            'cimage' => 'images/defaults/not found.jpg',
             'bio' => 'Cool user is very cool & legend bio'
         ]);
         User::factory()->create([
@@ -38,14 +38,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Venom',
             'email' => 'test1@example.com',
             'image' => 'avatars/dummy.svg',
-            'cimage' => '',
+            'cimage' => 'images/defaults/not found.jpg',
             'bio' => 'Test user 1 very cool & legend bio'
         ]);
         User::factory()->create([
             'name' => 'Ryo',
             'email' => 'test2@example.com',
             'image' => 'avatars/dummy.svg',
-            'cimage' => '',
+            'cimage' => 'images/defaults/not found.jpg',
             'bio' => 'Test user 2 very cool & legend bio'
         ]);
 

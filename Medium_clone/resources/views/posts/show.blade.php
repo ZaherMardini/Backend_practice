@@ -6,8 +6,15 @@
       <img src="{{Storage::url($post->user->image)}}" class="w-[90px] h-[90px] rounded-full"/>
         <span class="flex flex-col justify-center text-gray-700">
           <div>
+            
             <a href="{{route('profile.show', ['user' => $post->user])}}" class="font-bold">{{$username}}</a>
-            <a href="#" class="text-md text-emerald-700 font-bold">Follow (dummy)</a>
+
+            @if (Auth::user()->id !== $post->user->id)
+            <form id="fol" action="{{route('follow', ['user' => $post->user])}}" method="post" hidden>@csrf</form>
+            <x-primary-button class="text-emerald-700" form="fol">Follow (dummy)</x-primary-button>
+            @endif
+
+            {{-- <x-secondary-button form="fol" class="text-md text-emerald-700 font-bold">Follow (dummy)</x-secondary-button> --}}
           </div>
           <span>{{$post->readingTime()}} min read . {{$post->created_at->format('M d, Y')}}</span>
         </span>
@@ -18,8 +25,8 @@
     <div>
       <div class="w-full h-[2px] my-2 bg-gray-500 text-gray-500"></div>
         {{-- <i class="fa-solid fa-thumbs-up mx-2 text-gray-500"></i><span class="text-gray-700">3.4k</span> --}}
-        <i class="fa-regular fa-thumbs-up mx-2 text-gray-500"></i> <span class="text-gray-700">3.4k (dummy)</span>
-        <span class="text-gray-700"><i class="fa-regular fa-comment mx-2 text-gray-500"></i>3.4k (dummy)</span>
+        <i class="fa-regular fa-thumbs-up mx-1 text-gray-500"></i> <span class="text-gray-700">{{$post->likes()}}</span>
+        <a href="{{route('comment.show', ['user' => $post->user, 'post' => $post])}}" class="text-gray-700"><i class="fa-regular fa-comment mx-2 text-gray-500"></i>{{$post->comments()}}</a>
       <div class="w-full h-[2px] my-2 bg-gray-500"></div>
     </div>
     {{-- End Likes section --}}

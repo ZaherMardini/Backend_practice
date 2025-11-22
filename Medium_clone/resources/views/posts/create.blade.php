@@ -40,7 +40,7 @@
 
       {{-- Pubilsh --}}
       <x-input-label>Publish date</x-input-label>
-      <x-text-input name="published_at" type="datetime" :value="old('published_at')"/>
+      <x-text-input name="published_at" type="datetime" :value="old('published_at') ?? '2025-11-21 15:02:19'"/>
       <x-input-error :messages="$errors->get('published_at')" class="mt-2" />
       {{-- End Publish --}}
       <x-primary-button class="my-2">Create</x-primary-button>

@@ -17,7 +17,7 @@
         :imgPath="$post->Image" 
         :header="$post->title" 
         :content="$post->content" 
-        :link="route('post.show', ['username'=> $post->user->name, 'post' => $post])">
+        :link="route('post.show', ['user'=> $post->user->name, 'post' => $post])">
       </x-post>
       @empty
         <div class="text-gray-400 my-12">No posts to show</div>
