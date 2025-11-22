@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,31 +21,35 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Cool User',
+            'name' => 'Raiden',
             'email' => 'cool@example.com',
-            'image' => '',
+            'image' => 'avatars/dummy.svg',
+            'cimage' => '',
             'bio' => 'Cool user is very cool & legend bio'
         ]);
         User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Peter',
             'email' => 'test@example.com',
-            'image' => '',
+            'image' => 'images/defaults/dummy.svg',
+            'cimage' => 'images/defaults/not found.jpg',
             'bio' => 'Test user very cool & legend bio'
         ]);
         User::factory()->create([
-            'name' => 'Test User_1',
+            'name' => 'Venom',
             'email' => 'test1@example.com',
-            'image' => '',
+            'image' => 'avatars/dummy.svg',
+            'cimage' => '',
             'bio' => 'Test user 1 very cool & legend bio'
         ]);
         User::factory()->create([
-            'name' => 'Test User_2',
+            'name' => 'Ryo',
             'email' => 'test2@example.com',
-            'image' => '',
+            'image' => 'avatars/dummy.svg',
+            'cimage' => '',
             'bio' => 'Test user 2 very cool & legend bio'
         ]);
 
-        $categories = ['All', 'Technology', 'Sport', 'Science', 'Politics', 'Entertainment'];
+        $categories = ['All', 'Translearner', 'Technology', 'Sport', 'Science', 'Politics', 'Entertainment'];
         foreach ($categories as $category) {
             Category::create(['name' => $category]);
         };

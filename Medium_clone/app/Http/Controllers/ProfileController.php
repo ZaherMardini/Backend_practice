@@ -29,13 +29,18 @@ class ProfileController extends Controller
     {
         $info = $request->validated();
         $img = $request->file('file') ?? null;
+        $cover_img = $request->file('cover') ?? null;
         if($img){
             $imgname = Str::uuid() . '.' . $img->getClientOriginalExtension();
             $info['image'] = $img->storeAs('avatars', $imgname, 'public');
             unset($info['file']);
         }
-        $request->user()->fill($info);
-
+        if($cover_img){
+            $imgname = Str::uuid() . '.' . $cover_img->getClientOriginalExtension();
+            $info['cimage'] = $cover_img->storeAs('avatars', $imgname, 'public');
+            unset($info['cover']);
+        }
+        $request->user()->fill($info); //bug: cover not filled
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }

@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -25,6 +26,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
     ];
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
 
     public function followers(){
         return $this->belongsToMany(User::class, 'user_follower',

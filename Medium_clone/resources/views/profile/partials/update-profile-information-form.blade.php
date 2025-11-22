@@ -29,14 +29,28 @@
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />
         </div>
         
+        
+        
+        {{-- Profile --}}
         @if (Auth::user()->image)
             <x-profile-img/>
         @endif
-
         <div>
             <x-input-label value="Upload Image" />
             <x-input-file name="file" class="mb-10"/>
             <x-input-error :messages="$errors->get('file')" class="mt-2" />
+        </div>
+
+        
+        
+        {{-- Cover fucking bug, field doesn't show up in the $info request--}}
+        @if (Auth::user()->cimage)
+            <x-profile-img :src="Auth::user()->cimage"/>
+        @endif
+        <div>
+            <x-input-label value="Upload Cover Image" />
+            <x-input-file name="cover" class="mb-10"/>
+            <x-input-error :messages="$errors->get('cover')" class="mt-2" />
         </div>
 
         <div>

@@ -6,7 +6,7 @@
       {{-- {{dd($post->user->name)}} --}}
       <img src="{{Storage::url($post->user->image)}}" class="w-[90px] h-[90px] rounded-full"/>
         <span class="flex flex-col justify-center text-gray-700">
-          <a href="{{route('profile.show', ['user' => $post->user])}}">{{$username}} (this should be link to public profile)</a>
+          <a href="{{route('profile.show', ['user' => $post->user])}}" class="font-bold">{{$username}}</a>
           <span>{{$post->readingTime()}} min read . {{$post->created_at->format('M d, Y')}}</span>
         </span>
     </div>
@@ -17,6 +17,7 @@
       <div class="w-full h-[2px] my-2 bg-gray-500 text-gray-500"></div>
         {{-- <i class="fa-solid fa-thumbs-up mx-2 text-gray-500"></i><span class="text-gray-700">3.4k</span> --}}
         <i class="fa-regular fa-thumbs-up mx-2 text-gray-500"></i> <span class="text-gray-700">3.4k (dummy)</span>
+        <span class="text-gray-700"><i class="fa-regular fa-comment mx-2 text-gray-500"></i>3.4k (dummy)</span>
       <div class="w-full h-[2px] my-2 bg-gray-500"></div>
     </div>
     {{-- End Likes section --}}

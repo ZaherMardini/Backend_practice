@@ -7,7 +7,7 @@ use App\Http\Controllers\TestingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', [TestingController::class, 'test']);
-Route::get('/{user:name}', [PublicProfileController::class, 'show'])->name('profile.show');
+Route::get('/@{user:name}', [PublicProfileController::class, 'show'])->name('profile.show');
 
 Route::middleware('auth')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/', [PostController::class, 'index'])->name('dashboard');

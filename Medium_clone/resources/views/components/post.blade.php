@@ -1,6 +1,10 @@
-@props(['link', 'imgPath', 'header', 'content'])
+@php
+    $defaultStyles = "flex flex-wrap justify-between items-center bg-[#1e2939] p-6 border border-default rounded-base shadow-xs md:flex-row";
+@endphp
 
-<a href="{{$link}}" class="flex flex-wrap justify-between items-center  my-5 w-[80%] bg-[#1e2939] p-6 border border-default rounded-base shadow-xs md:flex-row">
+@props(['header', 'content','link', 'imgPath'])
+
+<a href="{{$link}}" {{$attributes->merge(['class' => $defaultStyles])}}>
     <div class="flex flex-col justify-between md:p-4 leading-normal">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{$header}}</h5>
         <p class="mb-6 text-[#f3f4f6]">{{Str::words($content, 10)}}</p>
@@ -12,4 +16,7 @@
         </div>
     </div>
     <img class="object-cover max-w-[200px] max-h-full rounded-base mb-4 md:mb-0" src="{{$imgPath}}">
+    <div>
+        {{$slot ?? ''}}
+    </div>
 </a>

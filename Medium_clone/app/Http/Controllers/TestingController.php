@@ -9,8 +9,8 @@ class TestingController extends Controller
 {
     public function test(){
 
-        $u = User::find(2);
-        $f = User::find(3);
-        return view('testing.followers', ['user' => $u, 'toFollow' => $f]);
+        $first = User::find(1);
+        $second = User::find(3);
+        return view('testing.post-testing', ['first' => $first, 'second' => $second]);
     }
 }

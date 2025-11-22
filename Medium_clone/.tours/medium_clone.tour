@@ -8,6 +8,11 @@
       "line": 20
     },
     {
+      "file": "app/Http/Controllers/ProfileController.php",
+      "description": "There was a nasty bug here:cover image file is not transported in the request\r\n, at first, i was editing the wrong requestForm file, then the file was sent but the model doesn't accept it\r\nthe solution was to disable the massassignment feature, check the legend notes and congrats for this problem solving level up",
+      "line": 38
+    },
+    {
       "file": "resources/views/posts/show.blade.php",
       "description": "Notice the beauty of named routes and how to send entire model through them, also look at the corresponding route",
       "line": 9
