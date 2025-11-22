@@ -3,10 +3,12 @@
     {{-- User info section --}}
     <h1 class="mx-auto text-2xl font-bold">{{$post->title}}</h1>
     <div class="flex flex-wrap gap-3 p-2">
-      {{-- {{dd($post->user->name)}} --}}
       <img src="{{Storage::url($post->user->image)}}" class="w-[90px] h-[90px] rounded-full"/>
         <span class="flex flex-col justify-center text-gray-700">
-          <a href="{{route('profile.show', ['user' => $post->user])}}" class="font-bold">{{$username}}</a>
+          <div>
+            <a href="{{route('profile.show', ['user' => $post->user])}}" class="font-bold">{{$username}}</a>
+            <a href="#" class="text-md text-emerald-700 font-bold">Follow (dummy)</a>
+          </div>
           <span>{{$post->readingTime()}} min read . {{$post->created_at->format('M d, Y')}}</span>
         </span>
     </div>
