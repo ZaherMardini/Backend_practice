@@ -28,17 +28,11 @@ class Post extends Model
     }
 
   public function likes(){
-    $result = DB::select("SELECT likes.post_id, COUNT(1) AS 'likes' FROM likes
-                group by likes.post_id");
-    collect($result);
-    return $result['0']->likes;
+    return $this->hasMany(Like::class);
   }
     
   public function comments(){
-    $result = DB::select("SELECT comments.post_id, COUNT(1) AS 'comments' FROM comments
-                group by comments.post_id");
-    collect($result);
-    return $result['0']->comments;
+    return $this->hasMany(Comment::class);
   }
 }
 

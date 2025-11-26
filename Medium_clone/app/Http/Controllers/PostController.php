@@ -59,30 +59,11 @@ class PostController extends Controller
      */
     public function show(string $username, Post $post)
     {
-        return view('posts.show', ['username' => $username, 'post' => $post]);
+      $post->load('comments.user');
+      return view('posts.show', ['username' => $username, 'post' => $post]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

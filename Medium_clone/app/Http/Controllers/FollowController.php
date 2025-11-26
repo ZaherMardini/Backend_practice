@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
-  public function store(User $user){
-    Auth::user()->follow($user);
-    dd($user->followers);
-  }
+  public function toggleFollowing(User $user){
+    $user->followers()->toggle(Auth::user());
+    return response()->json(['followers' => $user->followers()->count()]);
+  } 
 }

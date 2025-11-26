@@ -7,3 +7,6 @@
   <i class="fa-solid fa-thumbs-up mx-2"></i>3.4k
   <i class="fa-regular fa-thumbs-up"></i> 3.4k
   <span class="text-gray-700"><i class="fa-regular fa-comment mx-2 text-gray-500"></i>3.4k (dummy)</span>
+
+
+    <a href="{{route('comment.show', ['user' => $post->user, 'post' => $post])}}" class="text-gray-700"><i class="fa-regular fa-comment mx-2 text-gray-500"></i></a>

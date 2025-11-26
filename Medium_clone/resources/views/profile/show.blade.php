@@ -21,7 +21,7 @@
             :content="$post->content">
             <div class="absolute bottom-2 left-[200px]">
                <div id="likes-comments" class="text-gray-500 flex gap-5">
-                  <span><i class="fa-regular fa-thumbs-up mx-2 text-gray-500"></i>{{$post->likes()}}</span>
+                  <span><i class="fa-regular fa-thumbs-up mx-2 text-gray-500"></i>{{$post->likes()->count()}}</span>
                   <span><i class="fa-regular fa-comment mx-2 text-gray-500"></i>{{$post->comments()}}</span>
                   <span>{{$post->created_at}}</span>
                </div>
@@ -34,13 +34,10 @@
    <div class="right-side w-1/4 bg-[#1b2533] p-3 border-2 border-l-[#6a7282]">
       <div class="info flex flex-col gap-3 bg-[#009eff21] p-4 text-white">
          <x-profile-img :src="$user->image"/>
-            <div>{{$user->name}}<i class="fa-solid fa-share mx-2"></i>Share (button cpy route)</div>
-            <div>{{$user->followers->count()}} followers</div>
-
-            @if (Auth::user()->id !== $post->user->id)
-            <form id="fol" action="{{route('follow', ['user' => $post->user])}}" method="post" hidden>@csrf</form>
-            <button form= "fol" class="p-2 bg-emerald-800 w-fit text-white rounded-md">Follow</button>
-            @endif
+            <div>{{$user->name}}<i class="fa-solid fa-share mx-2"></i>Share (button copy route)</div>
+            <x-follow-btn :user="$user">
+              <div ><span x-text="followers" class="mr-2"></span>Followers</div>
+            </x-follow-btn>
       </div>
    </div>
 </div>

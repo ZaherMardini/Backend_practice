@@ -7,7 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -28,20 +29,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
 // ++++++++++ Like feature ++++++++++ \\
 
-    private function likes() {
+    public function likes() {
       return $this->hasMany(Like::class);
     }
+
     public function liked(Post $post){
-      $result = DB::select("SELECT COUNT(1) AS 'count' FROM likes WHERE user_id = :user_id AND post_id = :post_id", ['user_id' => $this->id, 'post_id' => $post->id]);
-      return $result[0]->count > 0;
+      return $post->likes()->where('user_id', Auth::id())->exists();
     }
 
-    // public function liked(Post $post){
-    // return DB::table('likes')
-    //     ->where('user_id', $this->id)
-    //     ->where('post_id', $post->id)
-    //     ->exists();
-    // }
     public function like(Post $post){
       if($this->liked($post)){
         // delete the record from the likes table, should be toggle, but i don't know how
@@ -86,15 +81,15 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function isFollowedBy(int $user_id){
-        if($user_id !== $this->id){
-            $followers = $this->followers;
-            foreach ($followers as $follower) {
-                if($follower->id === $user_id){
-                    return true;
-                }
-            }
+      if($user_id !== $this->id){
+        $followers = $this->followers;
+        foreach ($followers as $follower) {
+          if($follower->id === $user_id){
+            return true;
+          }
         }
-        return false;
+      }
+      return false;
     }
 
     // ++++++++++ End Follow feature ++++++++++ \\
