@@ -1,24 +1,17 @@
 <x-app-layout>
   <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-    <x-tabs.tab class="m-10">
-      @foreach ($categories as $category)
-      <x-tabs.option link="###">
-        {{$category->name}}
-      </x-tabs.option>
-      @endforeach
-    </x-tabs.tab>
 
+    <x-categories/>
     {{-- Flow bite component --}}
 
     {{-- {{dd($posts)}} --}}
     <div class="post_container flex justify-center flex-wrap">
       @forelse ($posts as $post)
         <x-post 
-        :imgPath="$post->Image" 
-        :header="$post->title" 
-        :content="$post->content" 
+        :post="$post"
         :link="route('post.show', ['user'=> $post->user->name, 'post' => $post])">
       </x-post>
+      <x-like-comment-btn :post="$post" contStyle=""/>
       @empty
         <div class="text-gray-400 my-12">No posts to show</div>
       @endforelse

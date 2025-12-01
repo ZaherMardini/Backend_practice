@@ -56,6 +56,11 @@
       "file": "app/Http/Controllers/PostController.php",
       "description": "When retrieving the resource like this \"Category::get()\"\r\nits type is collection, when you apply pagination\r\nit will change to \"Illuminate\\Pagination\\LengthAwarePaginator\" \r\nyou can confirm this by the new method \"$posts->links()\" used \r\nin the view, (dashboard view line 24)",
       "line": 17
+    },
+    {
+      "file": "app/Http/Controllers/PostController.php",
+      "description": "The magic of the \"user only sees the posts of the ones who follow\" starts here",
+      "line": 21
     }
   ]
 }

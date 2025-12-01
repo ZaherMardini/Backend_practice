@@ -1,4 +1,4 @@
-@props(['src' => Auth::user()->image, 'size' => ''])
+@props(['src' => '', 'size' => ''])
 
 @php
   $styles = "object-cover rounded-base w-full";

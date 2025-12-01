@@ -33,7 +33,7 @@
         
         {{-- Profile --}}
         @if (Auth::user()->image)
-            <x-profile-img/>
+            <x-profile-img :src="Auth::user()->image" size="size-1/2"/>
         @endif
         <div>
             <x-input-label value="Upload Image" />
@@ -45,7 +45,7 @@
         
         {{-- Cover fucking bug, field doesn't show up in the $info request--}}
         @if (Auth::user()->cimage)
-            <x-profile-img :src="Auth::user()->cimage"/>
+            <x-profile-img :src="Auth::user()->cimage" size="size-1/2"/>
         @endif
         <div>
             <x-input-label value="Upload Cover Image" />

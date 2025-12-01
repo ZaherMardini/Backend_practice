@@ -1,10 +1,15 @@
-@props(['post'])
-<div class="flex gap-3">
+@props(['post', 'contStyle' => ''])
+<div class="flex gap-3 {{$contStyle}}">
   <div
   x-data="{
-    liked: @js(Auth::user()->liked($post)),
+    isAuthenticated: @js(Auth::check()),
+    liked: @js(Auth::check() ? Auth::user()->liked($post) : false),
     likes: @js($post->likes()->count()),
       like(){
+        if (!this.isAuthenticated) {
+        alert('You must be logged in to like a post.');
+        return;
+        }
         axios.post('/like/{{$post->id}}')
         .then(res=>{
           this.liked = !this.liked
@@ -17,21 +22,29 @@
   <i 
   @click="like()"
     :class=" liked ?
-    'fa-solid fa-thumbs-up mx-1 text-gray-500' :
-    'fa-regular fa-thumbs-up mx-1 text-gray-500'
+    'fa-solid fa-thumbs-up mx-1 text-gray-500 cursor-pointer' :
+    'fa-regular fa-thumbs-up mx-1 text-gray-500 cursor-pointer'
   "></i>
-    <span x-text="likes" class="text-gray-700"></span>
+    <span x-text="likes" class="text-gray-700 "></span>
   </div>
 
 {{-- comments --}}
 
   <div
     x-data="{
+      isAuthenticated: @js(Auth::check()),
       viewPanel: @js(false),
       comments: @js($post->comments),
       count: @js($post->comments()->count()),
       newComment: '',
       comment(){
+      
+      if (!this.isAuthenticated) {
+        alert('You must be logged in to comment on a post.');
+        return;
+      }
+
+
       if (!this.newComment.trim()) return;
         axios.post('/comment/{{$post->id}}',{body: this.newComment})
         .then(res=>{
@@ -69,4 +82,4 @@
   </div>
 </div>
   
-  {{-- <div class="w-full h-[2px] my-2 bg-gray-500 text-gray-500"></div> --}}
+  

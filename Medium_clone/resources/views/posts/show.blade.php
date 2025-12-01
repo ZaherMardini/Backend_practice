@@ -8,7 +8,9 @@
         <span class="flex flex-col justify-center text-gray-700">
           <div>
             <a href="{{route('profile.show', ['user' => $post->user])}}" class="font-bold">{{$username}}</a>
+            @auth
             <x-follow-btn :user="$post->user" />
+            @endauth
           </div>
           <span>{{$post->readingTime()}} min read . {{$post->created_at->format('M d, Y')}}</span>
         </span>
@@ -16,8 +18,9 @@
     {{-- End User info section --}}
 
     {{-- Likes section --}}
-
-    <x-like-comment-btn :post="$post"/>
+  <div class="w-full h-[2px] my-2 bg-gray-500 text-gray-500"></div>
+  <x-like-comment-btn :post="$post"/>
+  <div class="w-full h-[2px] my-2 bg-gray-500 text-gray-500"></div>
 
     {{-- End Likes section --}}
 
@@ -36,7 +39,7 @@
 
     {{-- Image section --}}
     <div class="p-3 my-2">
-      <x-profile-img :src="$post->Image" size="w-3/4 h-3/4" class="mx-auto"/>
+      <x-profile-img :src="$post->Image" size="w-1/2 h-1/2 mx-auto"/>
     </div>
     {{-- End Image section --}}
 
