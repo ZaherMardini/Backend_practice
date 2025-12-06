@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
 
         $categories = ['All', 'Translearner', 'Technology', 'Sport', 'Science', 'Politics', 'Entertainment'];
         foreach ($categories as $category) {
-            Category::create(['name' => $category]);
+          Category::create(['name' => $category]);
         };
 
         // Post::factory(10)->create();

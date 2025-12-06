@@ -18,8 +18,9 @@
           :post="$post"
           :link="route('post.show', ['user' => $post->user->name,'post' => $post])"
           >
-          </x-post>
           <x-like-comment-btn :post="$post"/>
+          </x-post>
+          {{-- <x-like-comment-btn :post="$post"/> --}}
         </div>
         @endforeach
       </div>

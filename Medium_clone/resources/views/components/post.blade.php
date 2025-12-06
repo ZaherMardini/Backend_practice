@@ -1,23 +1,40 @@
-@php
-    $defaultStyles = "flex flex-wrap justify-between items-center bg-[#1e2939] p-6 border border-default rounded-base shadow-xs md:flex-row  my-5";
-@endphp
-
 @props(['post', 'link'])
-<div class="relative">
-<a href="{{$link}}" {{$attributes->merge(['class' => $defaultStyles])}}>
-    <div class="flex flex-col justify-between md:p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{$post->title}}</h5>
-        <p class="mb-6 text-[#f3f4f6]">{{Str::words($post->content, 10)}}</p>
-        <div>
-            <button type="button" class="inline-flex items-center w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+
+<div class="bg-[#0f1828] border border-gray-700 rounded-xl p-4 flex gap-4">
+
+    {{-- LEFT SIDE: TEXT --}}
+    <div class="flex-1 flex flex-col justify-between">
+
+        <a href="{{ $link }}" class="block">
+            <h5 class="text-2xl font-bold text-white mb-2">
+                {{ $post->title }}
+            </h5>
+
+            <p class="text-gray-300 mb-4">
+                {{ Str::words($post->content, 20) }}
+            </p>
+
+            <button
+                class="inline-flex items-center px-4 py-2 text-sm rounded-lg
+                       bg-white text-black hover:bg-gray-200 transition">
                 Read more
-                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
+                <svg class="w-4 h-4 ms-2" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="2" d="M5 12h14m-7-7 7 7-7 7" />
+                </svg>
             </button>
+        </a>
+
+        {{-- SLOT: LIKE / COMMENT BUTTONS --}}
+        <div class="mt-4 pt-3 border-t border-gray-700">
+            {{ $slot }}
         </div>
     </div>
-    <img class="object-cover max-w-[200px] max-h-full rounded-base mb-4 md:mb-0" src="{{Storage::url($post->Image)}}">
-    <div>
-      {{$slot ?? ''}}
+
+
+    {{-- RIGHT SIDE: IMAGE --}}
+    <div class="w-48 flex-shrink-0">
+        <img src="{{ Storage::url($post->Image) }}"
+             class="rounded-lg object-cover w-full h-full">
     </div>
-</a>
+
 </div>
