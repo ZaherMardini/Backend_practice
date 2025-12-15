@@ -16,7 +16,7 @@ return new class extends Migration
       Schema::create('cart_items', function (Blueprint $table) {
         $table->id();
         $table->foreignIdFor(Product::class);
-        $table->foreignIdFor(Cart::class);
+        $table->foreignIdFor(Cart::class)->constrained()->cascadeOnDelete();
         $table->integer('quantity')->default(0);
         $table->timestamps();
       });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cart_items');
+      Schema::dropIfExists('cart_items');
     }
 };

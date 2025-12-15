@@ -2,18 +2,29 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 Route::middleware('guest')->prefix('v1')->group(function(){
   Route::post('/register', [AuthController::class, 'register']);
   Route::post('/login', [AuthController::class, 'login']);
+  // products
   Route::get('/products', [ProductController::class, 'index']);
-  Route::get('/products/{id}', [ProductController::class, 'show']);
+  Route::get('/products/{product}', [ProductController::class, 'show']);
+  // end products
+  //guest cart
+  Route::get('/carts', [CartController::class, 'index']);
+  Route::post('/carts', [CartController::class, 'store'])->middleware(AddQueuedCookiesToResponse::class);
+  //end guest cart
 });
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function(){
-  // Route::post('/products/{product}', [ProductController::class, 'store']);
-  Route::post('/products/{product}', [ProductController::class, 'update']);
-  // Route::put('/products/{id}/categories', [ProductController::class, '']);
-  Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+  // products
+  Route::post('/products/{product}', [ProductController::class, 'store']);
+  Route::patch('/products/{product}', [ProductController::class, 'update']);
+  Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+  // end products
+  // cart
+  // end cart
 });

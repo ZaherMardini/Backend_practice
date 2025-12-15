@@ -14,8 +14,11 @@ return new class extends Migration
     {
       Schema::create('carts', function (Blueprint $table) {
         $table->id();
-        $table->foreignIdFor(User::class)->unique();
+        $table->string('guest_token')->nullable()->unique();
+        $table->foreignIdFor(User::class)->nullable()->unique();
         $table->timestamps();
+
+        $table->index('guest_token');
       });
     }
 
