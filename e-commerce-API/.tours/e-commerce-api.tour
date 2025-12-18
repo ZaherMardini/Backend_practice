@@ -49,8 +49,23 @@
     },
     {
       "file": "app/Services/CartService.php",
+      "description": "Same cart for all",
+      "line": 136
+    },
+    {
+      "file": "app/Services/CartService.php",
+      "description": "Same item, just change the cart id & commit, cool me",
+      "line": 98
+    },
+    {
+      "file": "app/Services/CartService.php",
       "description": "I think i made security percaution here, even if the request has cart_id with the first visit it won't be considered, to prevent some hacker to impact other carts, Cool me.",
       "line": 15
+    },
+    {
+      "file": "app/Services/CartService.php",
+      "description": "the bulk update, one for quantity, one to insert new items",
+      "line": 109
     },
     {
       "file": "routes/api.php",

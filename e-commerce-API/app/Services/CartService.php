@@ -4,8 +4,12 @@ namespace App\Services;
 use App\Http\Requests\StoreCartItemRequest;
 use App\Models\Cart;
 use App\Models\CartItem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
+use function PHPUnit\Framework\isEmpty;
 
 class CartService{
   protected $request;
@@ -32,7 +36,7 @@ class CartService{
     else{
       $item = CartItem::create($info);
     }
-    return response()->json(['item' => $item]);
+    return response()->json(['Inserted item' => $item]);
   }
   public function tempToNormalCart(string $guest_token){
     $cart = Cart::where('guest_token', $guest_token)->firstOrFail();
@@ -80,19 +84,81 @@ class CartService{
     return response()->json(['error' => 'cart not found']);
   }
   public function mergeCarts(Cart $temp_cart, Cart $cart){
-    $items_1 = collect($cart->items);
-    $keyed = collect($temp_cart->items)->keyBy('product_id');
-    foreach ($items_1 as $item_1) {
-      if($keyed->get($item_1['product_id'])){
-        $item_1['quantity'] = $keyed->get($item_1['product_id'])['quantity'] + $item_1['quantity'];
-        // logic is good, needs refactor & to hit the DB
+    $keyedItems = collect($cart->items)->keyBy('product_id');
+    $tempItems = collect($temp_cart->items);
+    $syncNew = [];
+    $syncQuantity = [];
+    foreach ($tempItems as $tempItem) {
+      if($keyedItems->get($tempItem['product_id'])){
+        $keyItem = $keyedItems->get($tempItem['product_id']);
+        $keyItem['quantity'] += $tempItem['quantity'];
+        $syncQuantity[] = $keyItem;
+      }
+      else{
+        $tempItem['cart_id'] = $cart['id'];
+        $syncNew[] = $tempItem;
       }
     }
-      // $temp_cart->delete();
+    try {
+      $this->commit($syncNew, $syncQuantity);
+    } catch (\Throwable $th) {
+      throw $th;
     }
-    // dump('Items');
-    // dump($items_1);
-    // dump('temp_items');
-    // dump($items_2);
-    // dd('merge logic');
+    $temp_cart->delete();
+  }
+  public function commit(array $toMove, array $toSyncQuantity){
+    DB::transaction(function() use($toMove, $toSyncQuantity){
+      if(!empty($toSyncQuantity)){
+        $this->syncQuantity($toSyncQuantity);
+      }
+      if(!empty($toMove)){
+        $this->syncNewProducts($toMove);
+      }
+    });
+  }
+  public function syncQuantity(array $items){
+    $items = collect($items);
+    $ids = $items->pluck('id');
+    foreach ($items as $item) {
+      DB::table('cart_items')
+      ->whereIn('id', $ids)
+      ->update([
+        'quantity' => $item['quantity'],
+        'updated_at' => now()
+      ]);
+    }
+  }
+  public function syncNewProducts(array $items){
+    $items = collect($items);
+    DB::table('cart_items')
+    ->whereIn('id', collect($items)->pluck('id'))
+    ->update([
+      'cart_id' => $items[0]['cart_id'],
+      'updated_at' => now(),
+    ]);
+  }
+  public function clear(Cart $cart){
+    $cart->items()->delete();
+  }
+  public function checkout(Cart $cart){
+    // get product price & multiply by number
+    $items = $cart->items;
+    
+    // Sum everything 
+    // create order
+  }
+  public function removeItem(CartItem $item){
+    $item->delete();
+  }
+  public function quantityControll(CartItem $item, bool $increment = true){
+    $increment ? $item->quantity += 1 : $item->quantity -= 1;
+    $item->save();
+  }
+  // dump('Items');
+  // dump($items_1);
+  // dump('temp_items');
+  // dump($items_2);
+  // dd('merge logic');
+  // dump($toCommit);
+  // dump($toMove);
 }
