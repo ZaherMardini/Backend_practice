@@ -4,12 +4,9 @@ namespace App\Services;
 use App\Http\Requests\StoreCartItemRequest;
 use App\Models\Cart;
 use App\Models\CartItem;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-
-use function PHPUnit\Framework\isEmpty;
 
 class CartService{
   protected $request;
@@ -139,13 +136,6 @@ class CartService{
   }
   public function clear(Cart $cart){
     $cart->items()->delete();
-  }
-  public function checkout(Cart $cart){
-    // get product price & multiply by number
-    $items = $cart->items;
-    
-    // Sum everything 
-    // create order
   }
   public function removeItem(CartItem $item){
     $item->delete();

@@ -48,6 +48,11 @@
       "line": 9
     },
     {
+      "file": "app/Services/CheckoutService.php",
+      "description": "Eader loading is crucial here without questioning see how we did it in the setter method",
+      "line": 69
+    },
+    {
       "file": "app/Services/CartService.php",
       "description": "Same cart for all",
       "line": 136

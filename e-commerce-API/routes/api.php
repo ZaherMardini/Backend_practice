@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
@@ -15,16 +17,25 @@ Route::middleware('guest')->prefix('v1')->group(function(){
   // end products
   //guest cart
   Route::get('/carts', [CartController::class, 'index']);
-  Route::post('/carts', [CartController::class, 'store'])->middleware(AddQueuedCookiesToResponse::class);
+  Route::post('/cart/{item}', [CartController::class, 'store'])->middleware(AddQueuedCookiesToResponse::class);
   //end guest cart
 });
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function(){
+  //orders
+  Route::get('/orders', [OrderController::class, 'index']);
+  Route::get('/order/{order}', [OrderController::class, 'show']);
+  Route::post('/order', [OrderController::class, 'store']);
+  //end orders
   // products
   Route::post('/products/{product}', [ProductController::class, 'store']);
   Route::patch('/products/{product}', [ProductController::class, 'update']);
   Route::delete('/products/{product}', [ProductController::class, 'destroy']);
   // end products
+  // Reviews
+  Route::get('/products/{product}/reviews', [ReviewController::class, 'show']);
+  Route::post('/products/{product}/reviews', [ReviewController::class, 'store']);
+  // end Reviews
   // cart
   // end cart
 });
