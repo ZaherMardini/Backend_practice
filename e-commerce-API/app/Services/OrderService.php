@@ -40,7 +40,7 @@ class OrderService {
         'status' => 'new'
         ]);
         $this->order = $order;
-        $this->cart->delete();
+        $this->cart->items->delete();
       });
     }
     catch (\Throwable $th) {
